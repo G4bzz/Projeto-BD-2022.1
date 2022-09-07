@@ -71,7 +71,9 @@ export default function TelaAdicao(){
                 <TouchableOpacity
                     style={styles.textButtonCadastrar}
                     onPress={() => onPressCadas}
-                ></TouchableOpacity>
+                >
+                    <Text>Cadastrar</Text>
+                </TouchableOpacity>
             </View>
 
         </View>
