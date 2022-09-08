@@ -1,6 +1,6 @@
 import React from "react";
 import {View, Text,FlatList,SafeAreaView,TouchableOpacity,Button,TextInput,useState} from "react-native";
-import {NavigationContainer, useFocusEffect, useRoute} from "@react-navigation/native";
+import {NavigationContainer, useRoute} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import listagemCSS from "./telalistagemCSS";
 import detalhesCSS from "./telaDetalhesdetalhesCSS";
