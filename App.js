@@ -2,17 +2,21 @@ import React from "react";
 import {View, Text,FlatList,SafeAreaView,TouchableOpacity,Button,TextInput,useState} from "react-native";
 import {NavigationContainer, useRoute} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
-import listagemCSS from "./telalistagemCSS";
-import detalhesCSS from "./telaDetalhesdetalhesCSS";
+import listagemCSS from "./telaListagemCSS"
+import detalhesCSS from "./telaDetalhesCSS"
 import adicaoCSS from "./telaAdicaoCSS";
 
 const Eventos = [];
 const Pilha = createStackNavigator();
+const Comentarios = [];
 
 
 function TelaDetalhes({route,navigation}){
 
   const item = route.params.item;
+  const [textoComentario, onChangeTextComentario] = React.useState("")
+  const comment = new Object();
+  comment.texto = textoComentario;
   
 	return(
 		<View>
@@ -31,8 +35,113 @@ function TelaDetalhes({route,navigation}){
 					]} renderItem={({item}) => <Text style={detalhesCSS.listItems}><Text style={{fontWeight: 'bold'}}>{item.key[0]}</Text>{item.key[1]}</Text>}/>
 				</View>
 			</View>
-		</View>
+            <TextInput 
+              maxLength = {300}
+              value = {textoComentario}
+              onChange={onChangeTextComentario}
+              placeholder="Adicione um comentário"
+            />
+                <TouchableOpacity
+                    style={adicaoCSS.textButtonCadastrar}
+                    onPress={()=> navigation.navigate({name:"Comentarios",params:{texto: "textoComentario"},merge:true})}
+                >
+                    <Text>Adicionar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={adicaoCSS.textButtonCadastrar}
+                    onPress={()=> navigation.navigate({name:"Comentarios",merge:true})}
+                >
+                    <Text>Ver Comentários</Text>
+                </TouchableOpacity>
+    </View>
 	)
+}
+
+
+function TelaComentarios({route}){
+  const item = route.params
+  console.log(item)
+  const tamanho = Comentarios.length;
+  const comentario = new Object();
+  comentario.id = tamanho + 1;
+  comentario.texto = route.params?.texto;
+
+  if (comentario.texto == undefined){}
+  else{
+    Comentarios.push(comentario);
+  }
+  
+
+  console.log(Comentarios);
+
+
+  return(
+  <SafeAreaView style = {listagemCSS.container}>
+
+    <FlatList style = {listagemCSS.lista}
+    data = {Comentarios}
+    renderItem = {({item}) => 
+      <View style = {listagemCSS.containerEventos}>
+          <Text
+           style = {listagemCSS.titleEventos}> {item.texto}
+          </Text>
+      </View>
+
+    }
+    />
+  </SafeAreaView>
+  );
+}
+
+function TelaListagem({route,navigation}) {
+
+  
+  let tamanho = Eventos.length;
+  let info = new Object();
+  info.id = tamanho + 1;
+  info.nome = route.params?.nome;
+  info.desc = route.params?.desc;
+  info.local = route.params?.local;
+  info.data = route.params?.data;
+  info.hora = route.params?.hora;
+  info.autor = route.params?.autor;
+  info.cont = route.params?.cont;
+
+  if (info.nome === undefined) {}
+  else {Eventos.push(info);}
+
+  return(
+
+<SafeAreaView style = {listagemCSS.container}>
+
+  <FlatList style = {listagemCSS.lista}
+  data = {Eventos}
+  keyExtractor = {(item) => item.id}
+  renderItem = {({item}) => 
+    <View style = {listagemCSS.containerEventos}>
+        <Text 
+        onPress = {() => navigation.navigate("Detalhes",{item})} 
+        style = {listagemCSS.titleEventos}> {item.nome} 
+        </Text>
+    </View>
+
+  }
+  />
+  <View style = {listagemCSS.viewBotao}>
+
+  <TouchableOpacity
+          onPress = {() => navigation.navigate("Adicao")}
+          style={listagemCSS.botao}>
+          <Text style = {listagemCSS.textoBotao}>+</Text>
+  </TouchableOpacity>
+
+  </View>
+
+</SafeAreaView>
+
+)
+
+
 }
 
 
@@ -135,62 +244,12 @@ function TelaAdicao({navigation}) {
                 </TouchableOpacity>
             </View>
 
+
         </View>
     );
 }
 
 
-
-function TelaListagem({route,navigation}) {
-
-  
-  let tamanho = Eventos.length;
-  let info = new Object();
-  info.id = tamanho + 1;
-  info.nome = route.params?.nome;
-  info.desc = route.params?.desc;
-  info.local = route.params?.local;
-  info.data = route.params?.data;
-  info.hora = route.params?.hora;
-  info.autor = route.params?.autor;
-  info.cont = route.params?.cont;
-
-  if (info.nome === undefined) {}
-  else {Eventos.push(info);}
-
-  return(
-
-<SafeAreaView style = {listagemCSS.container}>
-
-  <FlatList style = {listagemCSS.lista}
-  data = {Eventos}
-  keyExtractor = {(item) => item.id}
-  renderItem = {({item}) => 
-    <View style = {listagemCSS.containerEventos}>
-        <Text 
-        onPress = {() => navigation.navigate("Detalhes",{item})} 
-        style = {listagemCSS.titleEventos}> {item.nome} 
-        </Text>
-    </View>
-
-  }
-  />
-  <View style = {listagemCSS.viewBotao}>
-
-  <TouchableOpacity
-          onPress = {() => navigation.navigate("Adicao")}
-          style={listagemCSS.botao}>
-          <Text style = {listagemCSS.textoBotao}>+</Text>
-  </TouchableOpacity>
-
-  </View>
-
-</SafeAreaView>
-
-)
-
-
-}
 
 export default function App() {
 
@@ -226,6 +285,17 @@ export default function App() {
               component = {TelaAdicao}
               options = {
               {title: "Novo evento", // Titulo da janela
+              headerStyle: {backgroundColor:"#008"}, //cor da barra inicial
+              headerTintColor: "#fff",
+              headerTitleAlign: "center" //formata a cor do texto do titulo
+              }}
+            />
+
+            <Pilha.Screen
+              name = "Comentarios"
+              component = {TelaComentarios}
+              options = {{
+              title: "Comentários", // Titulo da janela
               headerStyle: {backgroundColor:"#008"}, //cor da barra inicial
               headerTintColor: "#fff",
               headerTitleAlign: "center" //formata a cor do texto do titulo
