@@ -1,5 +1,5 @@
 import {View,Text,TouchableOpacity,SafeAreaView,FlatList} from 'react-native'
-import styles from "./telaListagemCSS"
+import styles from "./style/telaListagemCSS"
 
 const Eventos = [];
 

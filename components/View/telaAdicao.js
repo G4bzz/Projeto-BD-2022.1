@@ -1,6 +1,6 @@
 import React from 'react'
 import {View,Text,TextInput,TouchableOpacity} from 'react-native'
-import styles from "./telaAdicaoCSS"
+import styles from "./style/telaAdicaoCSS"
 
 function TelaAdicao({navigation}) {
     const [textoNome, onChangeTextNome] = React.useState("")

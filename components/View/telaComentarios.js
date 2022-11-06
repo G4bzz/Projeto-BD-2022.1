@@ -1,6 +1,6 @@
 import React from 'react'
 import {View,SafeAreaView,FlatList,Text} from 'react-native'
-import styles from "./telaComentariosCSS"
+import styles from "./style/telaComentariosCSS"
 
 const Comentarios = []
 
