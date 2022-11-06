@@ -1,10 +1,10 @@
 import React from "react";
 import {NavigationContainer, useRoute} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
-import TelaListagem from "./components/telaListagem";
-import TelaAdicao from "./components/telaAdicao";
-import TelaDetalhes from "./components/telaDetalhes";
-import TelaComentarios from "./components/telaComentarios";
+import TelaListagem from "./components/View/telaListagem";
+import TelaAdicao from "./components/View/telaAdicao";
+import TelaDetalhes from "./components/View/telaDetalhes";
+import TelaComentarios from "./components/View/telaComentarios";
 
 
 const Pilha = createStackNavigator();
