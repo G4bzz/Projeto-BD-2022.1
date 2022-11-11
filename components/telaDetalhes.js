@@ -1,6 +1,6 @@
 import React from 'react'
 import {View,Text,FlatList,TouchableOpacity,TextInput} from 'react-native'
-import styles from "./style/telaDetalhesCSS"
+import styles from "./telaDetalhesCSS"
 
 function TelaDetalhes({route,navigation}){
 
