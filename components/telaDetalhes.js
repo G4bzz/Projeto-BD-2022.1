@@ -9,21 +9,21 @@ function TelaDetalhes({route,navigation}){
     const comment = new Object();
     comment.texto = textoComentario;
     
-    const idEvento = item.id;
+    const idEvento = item.id_evento;
     
       return(
           <View style = {styles.containerPai}>
               <View style = {styles.header}>
-                  <Text style={styles.h1}>{item.nome}</Text>
+                  <Text style={styles.h1}>{item.titulo}</Text>
               </View>
               <View style={styles.container}>
                   <View style={styles.boxList}>
                       <FlatList data={[
-                          {key: ['Descrição: ', item.desc]},
+                          {key: ['Descrição: ', item.descricao]},
                           {key: ['Local: ', item.local]},
-                          {key: ['Data: ', item.data]},
+                          {key: ['Data: ', item.datainicio]},
                           {key: ['Horário: ', item.hora]},
-                          {key: ['Enviado por: ', item.autor]},
+                          {key: ['Enviado por: ', item.mat_criador]},
                           {key: ['Contato: ', item.cont]}
                       ]} renderItem={({item}) => <Text style={styles.listItems}><Text style={{fontWeight: 'bold'}}>{item.key[0]}</Text>{item.key[1]}</Text>}/>
                   </View>
