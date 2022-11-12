@@ -8,7 +8,9 @@ function TelaDetalhes({route,navigation}){
     const [textoComentario, onChangeTextComentario] = React.useState("")
     const comment = new Object();
     comment.texto = textoComentario;
-    
+
+    const data = item.datainicio.slice(8,10) + "/" + item.datainicio.slice(5,7)+ "/" + item.datainicio.slice(0,4);
+    const horario = item.datainicio.slice(12,16);
     const idEvento = item.id_evento;
     
       return(
@@ -21,8 +23,8 @@ function TelaDetalhes({route,navigation}){
                       <FlatList data={[
                           {key: ['Descrição: ', item.descricao]},
                           {key: ['Local: ', item.local]},
-                          {key: ['Data: ', item.datainicio]},
-                          {key: ['Horário: ', item.hora]},
+                          {key: ['Data: ', data]},
+                          {key: ['Horário: ', horario]},
                           {key: ['Enviado por: ', item.mat_criador]},
                           {key: ['Contato: ', item.cont]}
                       ]} renderItem={({item}) => <Text style={styles.listItems}><Text style={{fontWeight: 'bold'}}>{item.key[0]}</Text>{item.key[1]}</Text>}/>
