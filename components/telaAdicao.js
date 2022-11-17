@@ -34,14 +34,13 @@ function TelaAdicao({navigation}) {
                 "datainicio": textoData,
                 "datafim": null,
                 "descricao": textoDesc,
-                "id_evento": ceil(Math.random() * 100),
                 "mat_criador": var_mat_criador,
                 "tipoevento": var_tipoevento,
             })
             .then(function (response) {
                 //here you put the function to obtain the response.data
                 //setLabel is just an example;
-                setLabel(JSON.stringify(response.data));
+                setLabel((response.data));
             })
             .catch(function (error) {
                 alert(error.message);
