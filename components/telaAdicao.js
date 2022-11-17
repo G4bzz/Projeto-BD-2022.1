@@ -1,18 +1,57 @@
 import {View,Text,TextInput,TouchableOpacity} from 'react-native'
 import {useState} from 'react'
 import styles from "./telaAdicaoCSS"
+import axios from 'axios';
+const baseURL = 'https://projeto-bdp3.herokuapp.com/api';
 
 function TelaAdicao({navigation}) {
-    const [textoNome, onChangeTextNome] = useState("")
-    const [textoLocal, onChangeTextLocal] = useState("")
-    const [textoData, onChangeTextData] = useState("")
-    const [textoHorario, onChangeTextHora] = useState("")
-    const [textoAutor, onChangeTextAutor] = useState("")
-    const [textoContato, onChangeTextContato] = useState("")
-    const [textoDesc, onChangeTextDesc] = useState("")
+
+    const [textoTitulo, onCHangeTextoTitulo] = React.useState("")
+    const [textoLocal, onChangeTextLocal] = React.useState("")
+    const [textoData, onChangeTextData] = React.useState("")
+    const [textoHorario, onChangeTextHora] = React.useState("")
+    const [textoAutor, onChangeTextAutor] = React.useState("")
+    const [textoContato, onChangeTextContato] = React.useState("")
+    const [textoDesc, onChangeTextDesc] = React.useState("")
+
+
+    const createEvent = () => {
+        axios
+        .post(`${baseURL}/events/`, 
+            /* { //EXAMPLE
+                "titulo": "EVENTO TESTE",
+                "local": "EVENTO TESTE",
+                "datainicio": "2022-11-25T00:00:00",
+                "datafim": "2022-11-25T00:00:00",
+                "descricao": "EVENTO TESTE",
+                "id_evento": 9,
+                "mat_criador": 2022002,
+                "tipoevento": "Festa",
+            } */
+            {
+                "titulo": textoTitulo,
+                "local": textoLocal,
+                "datainicio": textoData,
+                "datafim": null,
+                "descricao": textoDesc,
+                "mat_criador": var_mat_criador,
+                "tipoevento": var_tipoevento,
+            })
+            .then(function (response) {
+                //here you put the function to obtain the response.data
+                //setLabel is just an example;
+                setLabel((response.data));
+            })
+            .catch(function (error) {
+                alert(error.message);
+            })
+            .finally(function () {
+                //alert('Finally called');
+            });
+    };
 
     let info = new Object();
-    info.nome = textoNome;
+    info.nome = textoTitulo;
     info.loc = textoLocal;
     info.data = textoData;
     info.hora = textoHorario;
@@ -27,8 +66,8 @@ function TelaAdicao({navigation}) {
                 <TextInput
                     maxLength = {36}
                     style={styles.formTextInput}
-                    value = {textoNome}
-                    onChangeText={onChangeTextNome}
+                    value = {textoTitulo}
+                    onChangeText={onCHangeTextoTitulo}
                     placeholder="Calourada de Psicologia"
                 />
 
@@ -92,7 +131,7 @@ function TelaAdicao({navigation}) {
 
                 <TouchableOpacity
                     style={styles.textButtonCadastrar}
-                    onPress={() => navigation.navigate({name:"Listagem",params:{nome:textoNome,local:textoLocal,data:textoData,hora:textoHorario,autor:textoAutor,desc:textoDesc,cont:textoContato},merge:true})}
+                    onPress={() => navigation.navigate({name:"Listagem",params:{nome:textoTitulo,local:textoLocal,data:textoData,hora:textoHorario,autor:textoAutor,desc:textoDesc,cont:textoContato},merge:true})}
                 >
                     <Text>Cadastrar</Text>
                 </TouchableOpacity>
