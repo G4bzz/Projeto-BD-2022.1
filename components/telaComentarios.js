@@ -22,8 +22,7 @@ function TelaComentarios({route}){
       Comentarios[idEvent].push(comentario)
     }
     
-    console.log(Comentarios)
-    console.log(Comentarios[idEvent])
+
 
     return(
     <SafeAreaView style = {styles.container}>

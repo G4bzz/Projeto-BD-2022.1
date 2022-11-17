@@ -4,7 +4,9 @@ import styles from "./telaListagemCSS"
 const Eventos = [];
 
 function TelaListagem({route,navigation}) {
- 
+
+    const matPar = route.params.mat;
+    console.log(matPar)
     let tamanho = Eventos.length;
     let info = new Object();
     info.id = tamanho;
@@ -36,7 +38,6 @@ function TelaListagem({route,navigation}) {
     }
     />
     <View style = {styles.viewBotao}>
-  
     <TouchableOpacity
             onPress = {() => navigation.navigate("Adicao")}
             style={styles.botao}>
@@ -45,7 +46,7 @@ function TelaListagem({route,navigation}) {
   
     </View>
   
-  </SafeAreaView>
+  </SafeAreaView> 
   
   )
   

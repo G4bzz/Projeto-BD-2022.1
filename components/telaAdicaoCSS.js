@@ -1,12 +1,24 @@
 import {StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 
-let width = Dimensions.get('window').width;
+let width = Dimensions.get('screen').width;
 
 
 export default StyleSheet.create({
-    formTextInput:{
+    container: {
+        width:'100%',
+        height:'100%',
+        //alignItems:'center',
         flex:1,
+        
+    },
+
+    title: {
+        fontSize: 16,
+        marginLeft: '2%',
+    },
+
+    formTextInput:{
         width:"90%",
         marginLeft:'5%',
         marginRight:'5%',
@@ -14,25 +26,21 @@ export default StyleSheet.create({
         alignItems:'center',
         borderRadius:50,
         backgroundColor:"#f6f6f6",
-        height:40,
+        height:'6%',
         margin:12,
         paddingLeft:10,
     },
     textButtonCadastrar:{
-        flex:1,
-        width:"90%",
-        marginLeft:'5%',
-        marginRight:'5%',
+        position:'relative',
+        marginLeft:'40%',
+        marginRight:'40%',
+        width:"20%",
+        height: '6%',
         alignItems:'center',
+        justifyContent: 'center',
         borderRadius:50,
         backgroundColor:"#ff0043",
-        paddingTop:14,
-        paddingBottom:14,
-    },
-    formLabel:{
-        color:"#000000",
-        fontSize:18,
-        paddingLeft:20,
-    },
+        marginTop:'2%',
 
+    },
 })

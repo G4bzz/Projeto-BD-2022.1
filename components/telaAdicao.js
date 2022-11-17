@@ -1,15 +1,15 @@
-import React from 'react'
 import {View,Text,TextInput,TouchableOpacity} from 'react-native'
+import {useState} from 'react'
 import styles from "./telaAdicaoCSS"
 
 function TelaAdicao({navigation}) {
-    const [textoNome, onChangeTextNome] = React.useState("")
-    const [textoLocal, onChangeTextLocal] = React.useState("")
-    const [textoData, onChangeTextData] = React.useState("")
-    const [textoHorario, onChangeTextHora] = React.useState("")
-    const [textoAutor, onChangeTextAutor] = React.useState("")
-    const [textoContato, onChangeTextContato] = React.useState("")
-    const [textoDesc, onChangeTextDesc] = React.useState("")
+    const [textoNome, onChangeTextNome] = useState("")
+    const [textoLocal, onChangeTextLocal] = useState("")
+    const [textoData, onChangeTextData] = useState("")
+    const [textoHorario, onChangeTextHora] = useState("")
+    const [textoAutor, onChangeTextAutor] = useState("")
+    const [textoContato, onChangeTextContato] = useState("")
+    const [textoDesc, onChangeTextDesc] = useState("")
 
     let info = new Object();
     info.nome = textoNome;
@@ -21,10 +21,9 @@ function TelaAdicao({navigation}) {
     info.desc = textoDesc;
 
     return(
-        <View > 
-            <Text style={styles.formLabel}>Insira os dados do evento</Text>
-            <View>
-                <Text>Nome: </Text> 
+        <View style = {styles.container}> 
+
+                <Text style = {styles.title}>Nome: </Text> 
                 <TextInput
                     maxLength = {36}
                     style={styles.formTextInput}
@@ -33,7 +32,7 @@ function TelaAdicao({navigation}) {
                     placeholder="Calourada de Psicologia"
                 />
 
-                <Text>Local: </Text> 
+                <Text style = {styles.title}>Local: </Text> 
                 <TextInput
                     maxLength = {36}
                     style={styles.formTextInput}
@@ -42,9 +41,7 @@ function TelaAdicao({navigation}) {
                     placeholder="Ex: Didática 1"
                 />
                 
-                <Text>
-                    Data:
-                </Text>
+                <Text style = {styles.title}>Data:</Text>
                 <TextInput
                     maxLength = {36}
                     style={styles.formTextInput}
@@ -52,7 +49,7 @@ function TelaAdicao({navigation}) {
                     onChangeText={onChangeTextData}
                     placeholder="09/09/2022"
                 />
-                <Text>
+                <Text style = {styles.title}>
                     Horário:
                 </Text>
                 <TextInput
@@ -62,7 +59,7 @@ function TelaAdicao({navigation}) {
                     onChangeText={onChangeTextHora}
                     placeholder="Ex: 12:00"
                 />
-                <Text>
+                <Text style = {styles.title}>
                     Autor:
                 </Text>
                 <TextInput
@@ -72,7 +69,7 @@ function TelaAdicao({navigation}) {
                     onChangeText={onChangeTextAutor}
                     placeholder="Ex: Jorge do bolo"
                 />
-                <Text>
+                <Text style = {styles.title}>
                     Descrição:
                 </Text>
                 <TextInput
@@ -82,7 +79,7 @@ function TelaAdicao({navigation}) {
                     onChangeText={onChangeTextDesc}
                     placeholder="Descreva o evento"
                 />
-                <Text>
+                <Text style = {styles.title}>
                     Insira uma forma de contato:
                 </Text>
                 <TextInput
@@ -99,7 +96,7 @@ function TelaAdicao({navigation}) {
                 >
                     <Text>Cadastrar</Text>
                 </TouchableOpacity>
-            </View>
+
 
         </View>
     );
