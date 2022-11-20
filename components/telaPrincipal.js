@@ -1,5 +1,6 @@
 import {Text,View,TouchableOpacity ,Alert} from 'react-native'
 import styles from "./telaPrincipalCSS"
+import React from 'react';
 
 function TelaPrincipal({navigation}) {
     

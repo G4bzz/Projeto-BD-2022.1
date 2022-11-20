@@ -13,7 +13,7 @@ const Eventos = [];
 function TelaListagem({route,navigation}) {
 
   const [label, setLabel] = useState('');
-  const matPar = route.params.mat;
+  var matPar = route.params.mat;
 
   const getEvents = () => {
     axios
@@ -55,7 +55,7 @@ function TelaListagem({route,navigation}) {
     <View style = {styles.viewBotao}>
   
     <TouchableOpacity
-            onPress = {() => navigation.navigate("Adicao")}
+            onPress = {() => navigation.navigate("Adicao",{matPar})}
             style={styles.botao}>
             <Text style = {styles.textoBotao}>+</Text>
     </TouchableOpacity>

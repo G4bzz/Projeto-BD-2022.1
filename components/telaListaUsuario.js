@@ -1,6 +1,7 @@
 import {View,Text,TouchableOpacity,SafeAreaView,FlatList} from 'react-native'
 import styles from "./telaListaUsuarioCSS"
 import {useEffect,useState} from "react"
+import React from 'react'
 import axios from 'axios'
 const baseURL = 'https://projeto-bdp3.herokuapp.com/api';
 

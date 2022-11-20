@@ -1,18 +1,21 @@
-import {View,Text,TextInput,TouchableOpacity} from 'react-native'
+import {View,Text,TextInput,TouchableOpacity, Alert} from 'react-native'
 import {useState} from 'react'
+import React from 'react'
 import styles from "./telaAdicaoCSS"
 import axios from 'axios';
 const baseURL = 'https://projeto-bdp3.herokuapp.com/api';
+import moment from 'moment';
 
-function TelaAdicao({navigation}) {
+function TelaAdicao({route,navigation}) {
 
     const [textoTitulo, onCHangeTextoTitulo] = React.useState("")
     const [textoLocal, onChangeTextLocal] = React.useState("")
     const [textoData, onChangeTextData] = React.useState("")
     const [textoHorario, onChangeTextHora] = React.useState("")
-    const [textoAutor, onChangeTextAutor] = React.useState("")
     const [textoContato, onChangeTextContato] = React.useState("")
     const [textoDesc, onChangeTextDesc] = React.useState("")
+
+    const matricula = route.params.matPar;
 
 
     const createEvent = () => {
@@ -34,8 +37,8 @@ function TelaAdicao({navigation}) {
                 "datainicio": textoData,
                 "datafim": null,
                 "descricao": textoDesc,
-                "mat_criador": var_mat_criador,
-                "tipoevento": var_tipoevento,
+                "mat_criador": matricula,
+                "tipoevento": 1,
             })
             .then(function (response) {
                 //here you put the function to obtain the response.data
@@ -50,14 +53,41 @@ function TelaAdicao({navigation}) {
             });
     };
 
-    let info = new Object();
-    info.nome = textoTitulo;
-    info.loc = textoLocal;
-    info.data = textoData;
-    info.hora = textoHorario;
-    info.aut = textoAutor;
-    info.cont = textoContato;
-    info.desc = textoDesc;
+    const cadastrarEMudarTela = () =>{
+
+        createEvent();
+        Alert.alert('Evento criado com sucesso');
+        navigation.navigate("Listagem", {mat}); 
+    
+    }
+
+        
+
+    function verificarCampos(){
+        if (textoTitulo == ""){
+            Alert.alert('O titulo não pode ser vazio. Por favor insira um título');
+        }
+        else if(textoLocal == "") {
+            Alert.alert('O local não pode ser vazio. Por favor insira um local');
+        }
+        else if(textoData == "") {
+            Alert.alert('O local não pode ser vazio. Por favor insira uma data no formato dd/mm/aaaa');
+        }
+        else if(textoDesc == "") {
+            Alert.alert('A descrição não pode ser vazia. Por favor insira uma descrição');
+        }
+        else{return true;}
+    }
+
+    function verificarData(data){
+        if (moment(data, "DD/MM/YYYY", true).isValid()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 
     return(
         <View style = {styles.container}> 
@@ -99,16 +129,6 @@ function TelaAdicao({navigation}) {
                     placeholder="Ex: 12:00"
                 />
                 <Text style = {styles.title}>
-                    Autor:
-                </Text>
-                <TextInput
-                    maxLength = {36}
-                    style={styles.formTextInput}
-                    value = {textoAutor}
-                    onChangeText={onChangeTextAutor}
-                    placeholder="Ex: Jorge do bolo"
-                />
-                <Text style = {styles.title}>
                     Descrição:
                 </Text>
                 <TextInput
@@ -131,7 +151,7 @@ function TelaAdicao({navigation}) {
 
                 <TouchableOpacity
                     style={styles.textButtonCadastrar}
-                    onPress={() => navigation.navigate({name:"Listagem",params:{nome:textoTitulo,local:textoLocal,data:textoData,hora:textoHorario,autor:textoAutor,desc:textoDesc,cont:textoContato},merge:true})}
+                    onPress={() => cadastrarEMudarTela()}
                 >
                     <Text>Cadastrar</Text>
                 </TouchableOpacity>
