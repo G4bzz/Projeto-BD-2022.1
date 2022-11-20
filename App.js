@@ -12,6 +12,7 @@ import TelaListaUsuario from "./components/telaListaUsuario"
 import TelaDeletaUsuario from "./components/telaDeletaUsuario";
 import TelaAtualizaUsuario from "./components/telaAtualizaUsuario"
 import TelaDetalhesUsuario from "./components/telaDetalhesUsuario";
+import TelaAttEvento from "./components/telaAttEvento"
 
 
 const Pilha = createStackNavigator();
@@ -117,6 +118,16 @@ export default function App() {
             <Pilha.Screen
               name = "Adicao"
               component = {TelaAdicao}
+              options = {
+              {title: "Novo evento", // Titulo da janela
+              headerStyle: {backgroundColor:"#008"}, //cor da barra inicial
+              headerTintColor: "#fff",
+              headerTitleAlign: "center" //formata a cor do texto do titulo
+              }}
+            />
+            <Pilha.Screen
+              name = "AtualizarEvento"
+              component = {TelaAttEvento}
               options = {
               {title: "Novo evento", // Titulo da janela
               headerStyle: {backgroundColor:"#008"}, //cor da barra inicial

@@ -62,18 +62,26 @@ function TelaDetalhes({ route, navigation }) {
     //Alert.alert(labelUsuario)
 
     const testaDelete = () => {
+
+
         if (parseInt(item.mat_criador) == parseInt(matricula,10)) {
             deleteEvent(parseInt(item.id_evento, 10));
             navigation.navigate("Listagem", {matricula});
         }
         else {
-            Alert.alert(item.mat_criador + " " + matricula);
+            Alert.alert("Você não pode excluir um evento que não foi você que criou.");
         }
     }
 
     const editarEvento = () => {
-        navigation.navigate("Adicao", {item:{item}, matricula:matricula})
+        if (parseInt(item.mat_criador) == parseInt(matricula,10)) {
+            navigation.navigate("AtualizarEvento", {item:{item}, matricula:matricula})
+        }
+        else {
+            Alert.alert("Você não pode editar um evento que não foi você que criou.");
+        }
     }
+        
 
 
 
@@ -92,7 +100,6 @@ function TelaDetalhes({ route, navigation }) {
                         { key: ['Descrição: ', item.descricao] },
                         { key: ['Local: ', item.local] },
                         { key: ['Data: ', item.datainicio] },
-                        { key: ['Horário: ', null] },
                         { key: ['Enviado por: ', item.mat_criador] },
                         { key: ['Contato: ', item.cont] }
                     ]} renderItem={({ item }) => <Text style={styles.listItems}><Text style={{ fontWeight: 'bold' }}>{item.key[0]}</Text>{item.key[1]}</Text>} />

@@ -24,22 +24,6 @@ function TelaAdicao({ route, navigation }) {
     const tiposEventos = ["Achado", "Evento de extensão", "Festa", "Perdido", "Venda"];
 
 
-    //variáveis usadas na parte de att o evento
-    const [textoTituloI, onCHangeTextoTituloi] = React.useState(item.titulo)
-    const [textoLocalI, onChangeTextLocali] = React.useState(item.local)
-    const [textoDataI, onChangeTextDatai] = React.useState(item.datainicio)
-    const [textoDescI, onChangeTextDesci] = React.useState(item.descricao)
-    const [textoTipoEventoI, onChangeTextTipoEventi] = React.useState(item.tipoevento);
-
-
-
-
-    const temItempraAtt = route.params.item != undefined ? true:false;
-
-
-
-
-    const index = temItempraAtt ? tiposEventos.indexOf(textoTipoEventoI) : null;
 
 
     
@@ -62,8 +46,8 @@ function TelaAdicao({ route, navigation }) {
                 {
                     "titulo": textoTitulo,
                     "local": textoLocal,
-                    "datainicio": textoData + textoHorario,
-                    "datafim": "",
+                    "datainicio": textoData,
+                    "datafim": " ",
                     "descricao": textoDesc,
                     "mat_criador": parseInt(matricula, 10),
                     "tipoevento": textoTipoEvento,
@@ -81,50 +65,13 @@ function TelaAdicao({ route, navigation }) {
             });
     };
 
-    const updateEvent = (id) => {
-        axios
-            .put(`${baseURL}/events/${id}`, 
-            /* { //EXAMPLE
-                "titulo": "EVENTO TESTE",
-                "local": "EVENTO TESTE",
-                "datainicio": "2022-11-25T00:00:00",
-                "datafim": "2022-11-25T00:00:00",
-                "descricao": "EVENTO TESTE",
-                "tipoevento": "Festa",
-            } */
-            {
-                "titulo": textoTituloI,
-                "local": textoLocalI,
-                "datainicio": textoDataI,
-                "datafim": "",
-                "descricao": textoDescI,
-                "tipoevento": textoTipoEventoI,
-            })
-            .then(function (response) {
-                //here you put the function to obtain the response.data
-                //setLabel is just an example;
-                setLabel(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-                alert(error.message);
-            })
-            .finally(function () {
-                //alert('Finally called');
-            });
-    };
-    
 
 
     const cadastrarEMudarTela = () => {
-        if (temItempraAtt){
-            updateEvent(item.id_evento);
-            Alert.alert('Evento atualizado com sucesso');
-        }
-        else{
-            createEvent();
-            Alert.alert('Evento criado com sucesso');
-        }
 
+        createEvent();
+        console.log(textoTitulo + textoLocal + textoData + textoDesc + matricula + textoTipoEvento)
+        Alert.alert('Evento criado com sucesso');
         navigation.navigate("Listagem", { matricula });
 
     }
@@ -164,8 +111,8 @@ function TelaAdicao({ route, navigation }) {
             <TextInput
                 maxLength={36}
                 style={styles.formTextInput}
-                value={temItempraAtt ? textoTituloI : textoTitulo}
-                onChangeText={temItempraAtt? onCHangeTextoTituloi : onCHangeTextoTitulo}
+                value={textoTitulo}
+                onChangeText={onCHangeTextoTitulo}
                 placeholder="Calourada de Psicologia"
             />
 
@@ -173,8 +120,8 @@ function TelaAdicao({ route, navigation }) {
             <TextInput
                 maxLength={36}
                 style={styles.formTextInput}
-                value={temItempraAtt ? textoLocalI : textoLocal}
-                onChangeText={temItempraAtt? onChangeTextLocali : onChangeTextLocal}
+                value={textoLocal}
+                onChangeText={onChangeTextLocal}
                 placeholder="Ex: Didática 1"
             />
 
@@ -182,8 +129,8 @@ function TelaAdicao({ route, navigation }) {
             <TextInput
                 maxLength={36}
                 style={styles.formTextInput}
-                value={temItempraAtt ? textoDataI : textoData}
-                onChangeText={temItempraAtt? onChangeTextDatai : onChangeTextData}
+                value={textoData}
+                onChangeText={onChangeTextData}
                 placeholder="Ex: 09/09/2022 15:30"
             />
             <Text style={styles.title}>
@@ -195,9 +142,9 @@ function TelaAdicao({ route, navigation }) {
             <SelectDropdown
                 buttonStyle={styles.dropdown}
                 data={tiposEventos}
-                onSelect={temItempraAtt? onChangeTextTipoEventi : onChangeTextTipoEvent}
+                onSelect={onChangeTextTipoEvent}
                 defaultButtonText="Identifique o tipo do evento"
-                defaultValue={temItempraAtt? tiposEventos[index] : null}
+                defaultValue={null}
                 dropdownIconPosition="right"
             />
             <Text style={styles.title}>
@@ -206,8 +153,8 @@ function TelaAdicao({ route, navigation }) {
             <TextInput
                 maxLength={36}
                 style={styles.formTextInput}
-                value={temItempraAtt ? textoDescI : textoDesc}
-                onChangeText={temItempraAtt? onChangeTextDesci : onChangeTextDesc}
+                value={textoDesc}
+                onChangeText={onChangeTextDesc}
                 placeholder="Descreva o evento"
             />
 
@@ -215,7 +162,7 @@ function TelaAdicao({ route, navigation }) {
                 style={styles.textButtonCadastrar}
                 onPress={() => cadastrarEMudarTela()}
             >
-                <Text>{temItempraAtt? "Atualizar evento": "Cadastrar"}</Text>
+                <Text>Cadastrar</Text>
             </TouchableOpacity>
 
 

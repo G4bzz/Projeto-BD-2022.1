@@ -14,6 +14,7 @@ function TelaListagem({ route, navigation }) {
   const [label, setLabel] = useState('');
   const matricula = route.params.matricula;
 
+
   const getEvents = () => {
     axios
       .get(`${baseURL}/events`)
@@ -56,7 +57,7 @@ function TelaListagem({ route, navigation }) {
       <View style={styles.viewBotao}>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("Adicao", { matricula })}
+          onPress={() => navigation.navigate("Adicao", {matricula:matricula })}
           style={styles.botao}>
           <Text style={styles.textoBotao}>+</Text>
         </TouchableOpacity>
