@@ -14,13 +14,17 @@ function TelaDetalhes({ route, navigation }) {
     const comment = new Object();
     comment.texto = textoComentario;
 
+
+    const usuario =(Object)=>{
+        setUsuario(Object);
+    }
     const getUserById = (id) => {
         axios
             .get(`${baseURL}/users/${id}`)
             .then(function (response) {
                 //here you put the function to obtain the response.data
                 //setLabel is just an example;
-                setUsuario((response.data));
+                usuario((response.data));
             })
             .catch(function (error) {
                 alert(error.message);
@@ -30,7 +34,12 @@ function TelaDetalhes({ route, navigation }) {
             });
     };
 
-    setUsuario(getUserById(item.mat_criador));
+    const pegaUser = (id) => {
+        getUserById(id);
+    };
+
+    //pegaUser(item.mat_criador);
+
 
     const deleteEvent = (id) => {
         axios
@@ -47,9 +56,11 @@ function TelaDetalhes({ route, navigation }) {
                 //alert('Finally called');
             });
     };
+    getUserById((item.mat_criador));
+    //Alert.alert(labelUsuario)
 
     const testaDelete = () => {
-        if (parseInt(item.mat_criador == parseInt(matricula,10))) {
+        if (parseInt(item.mat_criador) == parseInt(matricula,10)) {
             deleteEvent(parseInt(item.id_evento, 10));
             navigation.navigate("Listagem", {matricula});
         }
@@ -61,6 +72,8 @@ function TelaDetalhes({ route, navigation }) {
 
 
     //const idEvento = item.id_evento;
+
+    //Alert.alert(labelUsuario.matricula);
 
     return (
         <View style={styles.containerPai}>
@@ -74,7 +87,7 @@ function TelaDetalhes({ route, navigation }) {
                         { key: ['Local: ', item.local] },
                         { key: ['Data: ', item.datainicio] },
                         { key: ['Horário: ', null] },
-                        { key: ['Enviado por: ', labelUsuario.primeironome + " " + labelUsuario.sobrenome] },
+                        { key: ['Enviado por: ', labelUsuario.matricula] },
                         { key: ['Contato: ', item.cont] }
                     ]} renderItem={({ item }) => <Text style={styles.listItems}><Text style={{ fontWeight: 'bold' }}>{item.key[0]}</Text>{item.key[1]}</Text>} />
                 </View>
