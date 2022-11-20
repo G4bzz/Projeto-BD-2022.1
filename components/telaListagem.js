@@ -45,7 +45,7 @@ function TelaListagem({route,navigation}) {
     renderItem = {({item}) => 
       <View style = {styles.containerEventos}>
           <Text 
-          onPress = {() => navigation.navigate("Detalhes",{matPar})} 
+          onPress = {() => navigation.navigate("Detalhes",{item})} 
           style = {styles.titleEventos}> {item.titulo} 
           </Text>
       </View>

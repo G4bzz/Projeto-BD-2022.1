@@ -18,6 +18,19 @@ export default StyleSheet.create({
         marginLeft: '2%',
     },
 
+    dropdown:{
+        width:"90%",
+        marginLeft:'5%',
+        marginRight:'5%',
+        borderWidth:1,
+        alignItems:'center',
+        borderRadius:50,
+        backgroundColor:"#f6f6f6",
+        height:'6%',
+        margin:12,
+        paddingLeft:10,
+    },
+
     formTextInput:{
         width:"90%",
         marginLeft:'5%',

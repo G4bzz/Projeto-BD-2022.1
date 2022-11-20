@@ -8,7 +8,6 @@ function TelaDetalhes({route,navigation}){
     const [textoComentario, onChangeTextComentario] = React.useState("")
     const comment = new Object();
     comment.texto = textoComentario;
-    console.log(item);
 
     //const idEvento = item.id_evento;
     

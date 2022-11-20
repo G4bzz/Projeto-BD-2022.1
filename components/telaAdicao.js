@@ -1,10 +1,12 @@
 import {View,Text,TextInput,TouchableOpacity, Alert} from 'react-native'
 import {useState} from 'react'
+import SelectDropdown from 'react-native-select-dropdown';
 import React from 'react'
 import styles from "./telaAdicaoCSS"
 import axios from 'axios';
 const baseURL = 'https://projeto-bdp3.herokuapp.com/api';
 import moment from 'moment';
+import telaAdicaoCSS from './telaAdicaoCSS';
 
 function TelaAdicao({route,navigation}) {
 
@@ -14,8 +16,11 @@ function TelaAdicao({route,navigation}) {
     const [textoHorario, onChangeTextHora] = React.useState("")
     const [textoContato, onChangeTextContato] = React.useState("")
     const [textoDesc, onChangeTextDesc] = React.useState("")
+    const [textoTipoEvento, onChangeTextTipoEvent] = React.useState("");
 
     const matricula = route.params.matPar;
+
+    const tiposEventos = ["Achado","Evento de extensão", "Festa", "Perdido", "Venda"];
 
 
     const createEvent = () => {
@@ -38,7 +43,7 @@ function TelaAdicao({route,navigation}) {
                 "datafim": null,
                 "descricao": textoDesc,
                 "mat_criador": matricula,
-                "tipoevento": 1,
+                "tipoevento": textoTipoEvento,
             })
             .then(function (response) {
                 //here you put the function to obtain the response.data
@@ -127,6 +132,18 @@ function TelaAdicao({route,navigation}) {
                     value = {textoHorario}
                     onChangeText={onChangeTextHora}
                     placeholder="Ex: 12:00"
+                />
+                <Text style={styles.title}>
+                    Tipo do evento:
+                </Text>
+                <SelectDropdown
+                    buttonStyle={styles.dropdown}
+                    data={tiposEventos}
+                    onSelect={onChangeTextTipoEvent}
+                    defaultButtonText="Identifique o tipo do evento"
+                    buttonTextAfterSelection={textoTipoEvento}
+                    defaultValue={null}
+                    dropdownIconPosition="right"
                 />
                 <Text style = {styles.title}>
                     Descrição:
