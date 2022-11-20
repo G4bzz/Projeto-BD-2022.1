@@ -10,17 +10,13 @@ import telaAdicaoCSS from './telaAdicaoCSS';
 
 function TelaAdicao({ route, navigation }) {
 
-    const item = route.params.item != undefined ? route.params.item.item : null
     
     const matricula = route.params.matricula;
     const [textoTitulo, onCHangeTextoTitulo] = React.useState("")
     const [textoLocal, onChangeTextLocal] = React.useState("")
     const [textoData, onChangeTextData] = React.useState("")
-    const [textoHorario, onChangeTextHora] = React.useState("")
-    const [textoContato, onChangeTextContato] = React.useState("")
     const [textoDesc, onChangeTextDesc] = React.useState("")
     const [textoTipoEvento, onChangeTextTipoEvent] = React.useState("");
-    const [label, setLabel] = React.useState("");
     const tiposEventos = ["Achado", "Evento de extensão", "Festa", "Perdido", "Venda"];
 
 
@@ -33,23 +29,13 @@ function TelaAdicao({ route, navigation }) {
     const createEvent = () => {
         axios
             .post(`${baseURL}/events/`,
-                /* { //EXAMPLE
-                    "titulo": "EVENTO TESTE",
-                    "local": "EVENTO TESTE",
-                    "datainicio": "2022-11-25T00:00:00",
-                    "datafim": "2022-11-25T00:00:00",
-                    "descricao": "EVENTO TESTE",
-                    "id_evento": 9,
-                    "mat_criador": 2022002,
-                    "tipoevento": "Festa",
-                } */
+
                 {
                     "titulo": textoTitulo,
                     "local": textoLocal,
                     "datainicio": textoData,
-                    "datafim": " ",
                     "descricao": textoDesc,
-                    "mat_criador": parseInt(matricula, 10),
+                    "mat_criador": parseInt(matricula),
                     "tipoevento": textoTipoEvento,
                 })
             .then(function (response) {
@@ -133,9 +119,7 @@ function TelaAdicao({ route, navigation }) {
                 onChangeText={onChangeTextData}
                 placeholder="Ex: 09/09/2022 15:30"
             />
-            <Text style={styles.title}>
-                Horário:
-            </Text>
+
             <Text style={styles.title}>
                 Tipo do evento:
             </Text>
