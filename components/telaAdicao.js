@@ -10,6 +10,9 @@ import telaAdicaoCSS from './telaAdicaoCSS';
 
 function TelaAdicao({ route, navigation }) {
 
+    const item = route.params.item != undefined ? route.params.item.item : null
+    
+    const matricula = route.params.matricula;
     const [textoTitulo, onCHangeTextoTitulo] = React.useState("")
     const [textoLocal, onChangeTextLocal] = React.useState("")
     const [textoData, onChangeTextData] = React.useState("")
@@ -18,11 +21,28 @@ function TelaAdicao({ route, navigation }) {
     const [textoDesc, onChangeTextDesc] = React.useState("")
     const [textoTipoEvento, onChangeTextTipoEvent] = React.useState("");
     const [label, setLabel] = React.useState("");
-
-    const matricula = route.params.matricula;
-    const data = textoData + textoHorario;
-
     const tiposEventos = ["Achado", "Evento de extensão", "Festa", "Perdido", "Venda"];
+
+
+    //variáveis usadas na parte de att o evento
+    const [textoTituloI, onCHangeTextoTituloi] = React.useState(item.titulo)
+    const [textoLocalI, onChangeTextLocali] = React.useState(item.local)
+    const [textoDataI, onChangeTextDatai] = React.useState(item.datainicio)
+    const [textoDescI, onChangeTextDesci] = React.useState(item.descricao)
+    const [textoTipoEventoI, onChangeTextTipoEventi] = React.useState(item.tipoevento);
+
+
+
+
+    const temItempraAtt = route.params.item != undefined ? true:false;
+
+
+
+
+    const index = temItempraAtt ? tiposEventos.indexOf(textoTipoEventoI) : null;
+
+
+    
     //Alert.alert(matricula);
 
 
@@ -61,11 +81,50 @@ function TelaAdicao({ route, navigation }) {
             });
     };
 
+    const updateEvent = (id) => {
+        axios
+            .put(`${baseURL}/events/${id}`, 
+            /* { //EXAMPLE
+                "titulo": "EVENTO TESTE",
+                "local": "EVENTO TESTE",
+                "datainicio": "2022-11-25T00:00:00",
+                "datafim": "2022-11-25T00:00:00",
+                "descricao": "EVENTO TESTE",
+                "tipoevento": "Festa",
+            } */
+            {
+                "titulo": textoTituloI,
+                "local": textoLocalI,
+                "datainicio": textoDataI,
+                "datafim": "",
+                "descricao": textoDescI,
+                "tipoevento": textoTipoEventoI,
+            })
+            .then(function (response) {
+                //here you put the function to obtain the response.data
+                //setLabel is just an example;
+                setLabel(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                alert(error.message);
+            })
+            .finally(function () {
+                //alert('Finally called');
+            });
+    };
+    
+
 
     const cadastrarEMudarTela = () => {
+        if (temItempraAtt){
+            updateEvent(item.id_evento);
+            Alert.alert('Evento atualizado com sucesso');
+        }
+        else{
+            createEvent();
+            Alert.alert('Evento criado com sucesso');
+        }
 
-        createEvent();
-        Alert.alert('Evento criado com sucesso');
         navigation.navigate("Listagem", { matricula });
 
     }
@@ -105,8 +164,8 @@ function TelaAdicao({ route, navigation }) {
             <TextInput
                 maxLength={36}
                 style={styles.formTextInput}
-                value={textoTitulo}
-                onChangeText={onCHangeTextoTitulo}
+                value={temItempraAtt ? textoTituloI : textoTitulo}
+                onChangeText={temItempraAtt? onCHangeTextoTituloi : onCHangeTextoTitulo}
                 placeholder="Calourada de Psicologia"
             />
 
@@ -114,8 +173,8 @@ function TelaAdicao({ route, navigation }) {
             <TextInput
                 maxLength={36}
                 style={styles.formTextInput}
-                value={textoLocal}
-                onChangeText={onChangeTextLocal}
+                value={temItempraAtt ? textoLocalI : textoLocal}
+                onChangeText={temItempraAtt? onChangeTextLocali : onChangeTextLocal}
                 placeholder="Ex: Didática 1"
             />
 
@@ -123,29 +182,22 @@ function TelaAdicao({ route, navigation }) {
             <TextInput
                 maxLength={36}
                 style={styles.formTextInput}
-                value={textoData}
-                onChangeText={onChangeTextData}
-                placeholder="09/09/2022"
+                value={temItempraAtt ? textoDataI : textoData}
+                onChangeText={temItempraAtt? onChangeTextDatai : onChangeTextData}
+                placeholder="Ex: 09/09/2022 15:30"
             />
             <Text style={styles.title}>
                 Horário:
             </Text>
-            <TextInput
-                maxLength={36}
-                style={styles.formTextInput}
-                value={textoHorario}
-                onChangeText={onChangeTextHora}
-                placeholder="Ex: 12:00"
-            />
             <Text style={styles.title}>
                 Tipo do evento:
             </Text>
             <SelectDropdown
                 buttonStyle={styles.dropdown}
                 data={tiposEventos}
-                onSelect={onChangeTextTipoEvent}
+                onSelect={temItempraAtt? onChangeTextTipoEventi : onChangeTextTipoEvent}
                 defaultButtonText="Identifique o tipo do evento"
-                defaultValue={null}
+                defaultValue={temItempraAtt? tiposEventos[index] : null}
                 dropdownIconPosition="right"
             />
             <Text style={styles.title}>
@@ -154,8 +206,8 @@ function TelaAdicao({ route, navigation }) {
             <TextInput
                 maxLength={36}
                 style={styles.formTextInput}
-                value={textoDesc}
-                onChangeText={onChangeTextDesc}
+                value={temItempraAtt ? textoDescI : textoDesc}
+                onChangeText={temItempraAtt? onChangeTextDesci : onChangeTextDesc}
                 placeholder="Descreva o evento"
             />
 
@@ -163,7 +215,7 @@ function TelaAdicao({ route, navigation }) {
                 style={styles.textButtonCadastrar}
                 onPress={() => cadastrarEMudarTela()}
             >
-                <Text>Cadastrar</Text>
+                <Text>{temItempraAtt? "Atualizar evento": "Cadastrar"}</Text>
             </TouchableOpacity>
 
 

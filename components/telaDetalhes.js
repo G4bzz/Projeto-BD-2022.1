@@ -6,13 +6,15 @@ const baseURL = 'https://projeto-bdp3.herokuapp.com/api';
 
 function TelaDetalhes({ route, navigation }) {
 
-    const item = route.params.item;
-    const matricula = route.params.matricula;
+    const item = route.params.evento.item;
+    const matricula = route.params.matricula.matricula;
     const [textoComentario, onChangeTextComentario] = React.useState("");
     const [labelDeleteEvent, setLabel] = React.useState("");
     const [labelUsuario, setUsuario] = React.useState("");
     const comment = new Object();
     comment.texto = textoComentario;
+
+    console.log(matricula);
 
 
     const usuario =(Object)=>{
@@ -56,7 +58,7 @@ function TelaDetalhes({ route, navigation }) {
                 //alert('Finally called');
             });
     };
-    getUserById((item.mat_criador));
+    //getUserById((item.mat_criador));
     //Alert.alert(labelUsuario)
 
     const testaDelete = () => {
@@ -67,6 +69,10 @@ function TelaDetalhes({ route, navigation }) {
         else {
             Alert.alert(item.mat_criador + " " + matricula);
         }
+    }
+
+    const editarEvento = () => {
+        navigation.navigate("Adicao", {item:{item}, matricula:matricula})
     }
 
 
@@ -87,7 +93,7 @@ function TelaDetalhes({ route, navigation }) {
                         { key: ['Local: ', item.local] },
                         { key: ['Data: ', item.datainicio] },
                         { key: ['Horário: ', null] },
-                        { key: ['Enviado por: ', labelUsuario.matricula] },
+                        { key: ['Enviado por: ', item.mat_criador] },
                         { key: ['Contato: ', item.cont] }
                     ]} renderItem={({ item }) => <Text style={styles.listItems}><Text style={{ fontWeight: 'bold' }}>{item.key[0]}</Text>{item.key[1]}</Text>} />
                 </View>
@@ -118,6 +124,14 @@ function TelaDetalhes({ route, navigation }) {
             >
                 <Text>
                     Excluir evento
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.excluirEvento}
+                onPress={() => editarEvento()}
+            >
+                <Text>
+                    Editar evento
                 </Text>
             </TouchableOpacity>
 

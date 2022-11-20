@@ -7,7 +7,6 @@ import axios from 'axios';
 import { set } from 'react-native-reanimated';
 
 
-const Eventos = [];
 
 
 function TelaListagem({ route, navigation }) {
@@ -35,6 +34,7 @@ function TelaListagem({ route, navigation }) {
     getEvents();
   }, [route]);
 
+  console.log(matricula);
 
 
   return (
@@ -46,7 +46,7 @@ function TelaListagem({ route, navigation }) {
         renderItem={({ item }) =>
           <View style={styles.containerEventos}>
             <Text
-              onPress={() => navigation.navigate("Detalhes", { item }, { matricula })}
+              onPress={() => navigation.navigate("Detalhes", {evento:{item},matricula: { matricula }})}
               style={styles.titleEventos}> {item.titulo}
             </Text>
           </View>
