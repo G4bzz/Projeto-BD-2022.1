@@ -32,6 +32,18 @@ export default StyleSheet.create(
 		button:{
 			alignSelf: 'center'
 		},
+
+		excluirEvento:{
+			borderRadius:50,
+			alignItems:"center",
+			justifyContent:"center",
+			width:"90%",
+			backgroundColor:"#ff0043",
+			paddingTop:14,
+			paddingBottom:14,
+			marginLeft:12,
+			marginBottom:'1%'
+		},
 		
 		comentario: {
 			borderWidth: 1,

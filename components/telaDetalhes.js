@@ -1,56 +1,117 @@
 import React from 'react'
-import {View,Text,FlatList,TouchableOpacity,TextInput} from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, TextInput, useEffect, Alert } from 'react-native'
 import styles from "./telaDetalhesCSS"
+import axios from 'axios';
+const baseURL = 'https://projeto-bdp3.herokuapp.com/api';
 
-function TelaDetalhes({route,navigation}){
+function TelaDetalhes({ route, navigation }) {
 
     const item = route.params.item;
-    const [textoComentario, onChangeTextComentario] = React.useState("")
+    const matricula = route.params.matricula;
+    const [textoComentario, onChangeTextComentario] = React.useState("");
+    const [labelDeleteEvent, setLabel] = React.useState("");
+    const [labelUsuario, setUsuario] = React.useState("");
     const comment = new Object();
     comment.texto = textoComentario;
 
+    const getUserById = (id) => {
+        axios
+            .get(`${baseURL}/users/${id}`)
+            .then(function (response) {
+                //here you put the function to obtain the response.data
+                //setLabel is just an example;
+                setUsuario((response.data));
+            })
+            .catch(function (error) {
+                alert(error.message);
+            })
+            .finally(function () {
+                //alert('Finally called');
+            });
+    };
+
+    setUsuario(getUserById(item.mat_criador));
+
+    const deleteEvent = (id) => {
+        axios
+            .delete(`${baseURL}/events/${id}`)
+            .then(function (response) {
+                //here you put the function to obtain the response.data
+                //setLabel is just an example;
+                setLabel((response.data));
+            })
+            .catch(function (error) {
+                alert(error.message);
+            })
+            .finally(function () {
+                //alert('Finally called');
+            });
+    };
+
+    const testaDelete = () => {
+        if (parseInt(item.mat_criador == parseInt(matricula,10))) {
+            deleteEvent(parseInt(item.id_evento, 10));
+            navigation.navigate("Listagem", {matricula});
+        }
+        else {
+            Alert.alert(item.mat_criador + " " + matricula);
+        }
+    }
+
+
+
     //const idEvento = item.id_evento;
-    
-      return(
-          <View style = {styles.containerPai}>
-              <View style = {styles.header}>
-                  <Text style={styles.h1}>{item.titulo}</Text>
-              </View>
-              <View style={styles.container}>
-                  <View style={styles.boxList}>
-                      <FlatList data={[
-                          {key: ['Descrição: ', item.descricao]},
-                          {key: ['Local: ', item.local]},
-                          {key: ['Data: ', item.datainicio]},
-                          {key: ['Horário: ', null]},
-                          {key: ['Enviado por: ', item.mat_criador]},
-                          {key: ['Contato: ', item.cont]}
-                      ]} renderItem={({item}) => <Text style={styles.listItems}><Text style={{fontWeight: 'bold'}}>{item.key[0]}</Text>{item.key[1]}</Text>}/>
-                  </View>
-              </View>
-              <TextInput 
-                style = {styles.comentario}
-                maxLength = {300}
-                value = {textoComentario}
+
+    return (
+        <View style={styles.containerPai}>
+            <View style={styles.header}>
+                <Text style={styles.h1}>{item.titulo}</Text>
+            </View>
+            <View style={styles.container}>
+                <View style={styles.boxList}>
+                    <FlatList data={[
+                        { key: ['Descrição: ', item.descricao] },
+                        { key: ['Local: ', item.local] },
+                        { key: ['Data: ', item.datainicio] },
+                        { key: ['Horário: ', null] },
+                        { key: ['Enviado por: ', labelUsuario.primeironome + " " + labelUsuario.sobrenome] },
+                        { key: ['Contato: ', item.cont] }
+                    ]} renderItem={({ item }) => <Text style={styles.listItems}><Text style={{ fontWeight: 'bold' }}>{item.key[0]}</Text>{item.key[1]}</Text>} />
+                </View>
+            </View>
+            <TextInput
+                style={styles.comentario}
+                maxLength={300}
+                value={textoComentario}
                 onChangeText={onChangeTextComentario}
                 placeholder="Adicione um comentário"
-              />
-                  <TouchableOpacity
-                      style={styles.textButtonCadastrar}
-                      onPress={()=> navigation.navigate({name:"Comentarios",params:{texto: textoComentario, id : idEvento},merge:true},onChangeTextComentario(""))}
+            />
+            <TouchableOpacity
+                style={styles.textButtonCadastrar}
+                onPress={() => navigation.navigate({ name: "Comentarios", params: { texto: textoComentario, id: idEvento }, merge: true }, onChangeTextComentario(""))}
 
-                  >
-                      <Text>Adicionar</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                      style={styles.textButtonCadastrar}
-                      onPress={()=> navigation.navigate({name:"Comentarios",params:{id:idEvento},merge:true},onChangeTextComentario(""))}
-                  >
-                      <Text>Ver Comentários</Text>
-                  </TouchableOpacity>
-      </View>
-      )
-  }
+            >
+                <Text>Adicionar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.textButtonCadastrar}
+                onPress={() => navigation.navigate({ name: "Comentarios", params: { id: idEvento }, merge: true }, onChangeTextComentario(""))}
+            >
+                <Text>Ver Comentários</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.excluirEvento}
+                onPress={() => testaDelete()}
+            >
+                <Text>
+                    Excluir evento
+                </Text>
+            </TouchableOpacity>
+
+
+        </View>
+    )
+}
 
 
 export default TelaDetalhes;

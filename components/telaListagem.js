@@ -1,5 +1,5 @@
-import {View,Text,TouchableOpacity,SafeAreaView,FlatList} from 'react-native'
-import {useState, useEffect} from 'react';
+import { View, Text, TouchableOpacity, SafeAreaView, FlatList, Alert } from 'react-native'
+import { useState, useEffect } from 'react';
 import styles from "./telaListagemCSS"
 import React from 'react';
 const baseURL = 'https://projeto-bdp3.herokuapp.com/api';
@@ -10,10 +10,10 @@ import { set } from 'react-native-reanimated';
 const Eventos = [];
 
 
-function TelaListagem({route,navigation}) {
+function TelaListagem({ route, navigation }) {
 
   const [label, setLabel] = useState('');
-  var matPar = route.params.mat;
+  const matricula = route.params.matricula;
 
   const getEvents = () => {
     axios
@@ -31,42 +31,43 @@ function TelaListagem({route,navigation}) {
       });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getEvents();
-  },[]);
+  }, [route]);
 
 
-  return(
 
-  <SafeAreaView style = {styles.container}>
-    <FlatList style = {styles.lista}
-    data = {label}
-    keyExtractor = {(item) => item.id_evento}
-    renderItem = {({item}) => 
-      <View style = {styles.containerEventos}>
-          <Text 
-          onPress = {() => navigation.navigate("Detalhes",{item})} 
-          style = {styles.titleEventos}> {item.titulo} 
-          </Text>
+  return (
+
+    <SafeAreaView style={styles.container}>
+      <FlatList style={styles.lista}
+        data={label}
+        keyExtractor={(item) => item.id_evento}
+        renderItem={({ item }) =>
+          <View style={styles.containerEventos}>
+            <Text
+              onPress={() => navigation.navigate("Detalhes", { item }, { matricula })}
+              style={styles.titleEventos}> {item.titulo}
+            </Text>
+          </View>
+
+        }
+      />
+      <View style={styles.viewBotao}>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Adicao", { matricula })}
+          style={styles.botao}>
+          <Text style={styles.textoBotao}>+</Text>
+        </TouchableOpacity>
+
       </View>
-  
-    }
-    />
-    <View style = {styles.viewBotao}>
-  
-    <TouchableOpacity
-            onPress = {() => navigation.navigate("Adicao",{matPar})}
-            style={styles.botao}>
-            <Text style = {styles.textoBotao}>+</Text>
-    </TouchableOpacity>
-  
-    </View>
-  
-  </SafeAreaView>
-  
-)
+
+    </SafeAreaView>
+
+  )
 
 
 }
 
-  export default TelaListagem;
+export default TelaListagem;

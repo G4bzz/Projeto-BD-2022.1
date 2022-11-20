@@ -28,16 +28,16 @@ function TelaLogin({navigation,route}) {
 
     useEffect(() => {
       getUsers();
-    },[]);
+    },[route]);
 
     const autenticacao = (em,senha) => {
       var contador = 0;
 
       for (var i = 0 ; i < users.length ; i++) {
          if ((users[i].email == em) && (users[i].senha == senha)) {
-          const mat = users[i].matricula;
+          const matricula = users[i].matricula;
           Alert.alert('Autenticação realizada com sucesso!'); 
-          navigation.navigate("Listagem",{mat});
+          navigation.navigate("Listagem",{matricula});
           break;
         }
          else {contador++;}
