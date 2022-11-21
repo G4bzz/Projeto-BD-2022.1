@@ -53,16 +53,23 @@ function TelaComentarios({navigation,route}){
           });
   };
 
-  const verificaDelete = (id) => {
+
+
+  const verificaDelete = (id, index) => {
       var contador = 0;
 
-      for (var i = 0 ; i < comentarios.length ; i++) {
-  const item = route.params.evento.evento;
-         if ((comentarios[i].id_evento == item.id_evento) && (comentarios[i].mat_criador == mat)){deleteComment(id);Alert.alert('Comentário deletado com sucesso!'); navigation.navigate("Detalhes",{evento:{item},matricula:mat});break;}
-         else {contador++;}
-      }
-      if (contador === comentarios.length) {Alert.alert('Somente o criador do comentário pode deletá-lo!');navigation.navigate("Detalhes",{evento:{item},matricula:mat});}
-  };
+        const item = route.params.evento.evento;
+        if ((comentarios[index].mat_criador == mat)){
+            deleteComment(id);
+            Alert.alert('Comentário deletado com sucesso!'); 
+            navigation.navigate("Detalhes",{evento:{item},matricula:mat});
+        }
+        else {
+            Alert.alert('Somente o criador do comentário pode deletá-lo!');
+        }
+
+}
+
 
     return(
     <SafeAreaView style = {styles.container}>
@@ -70,7 +77,7 @@ function TelaComentarios({navigation,route}){
       <FlatList style = {styles.lista}
       data = {comentarios}
       keyExtractor={(item) => item.id_comentario}
-      renderItem = {({item}) => 
+      renderItem = {({item, index}) => 
         <View style = {styles.containerEventos}>
             <Text
              style = {styles.titleEventos}> {item.texto}
@@ -86,7 +93,7 @@ function TelaComentarios({navigation,route}){
 
             <TouchableOpacity
                 style={styles.botao2}
-                onPress={() => verificaDelete(item.id_comentario)}
+                onPress={() => verificaDelete(item.id_comentario, index)}
             >
                 <Text>Deletar</Text>
             </TouchableOpacity>

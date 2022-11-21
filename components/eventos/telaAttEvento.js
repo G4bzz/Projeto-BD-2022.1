@@ -14,12 +14,12 @@ function TelaAttEvento({ route, navigation }) {
 
     const [eventos,setEventos] = useState('')
     //variáveis usadas na parte de att o evento
-    const [titulo, setTitulo] = useState("")
-    const [local, setLocal] = useState("")
-    const [datainicio, setDatainicio] = useState("")
-    const [descricao,setDescricao] = useState("")
-    const [datafim, setDataFim] = useState("")
-    const [tipoEvento, setTipoEvento] = useState("")
+    const [titulo, setTitulo] = useState(item.titulo)
+    const [local, setLocal] = useState(item.local)
+    const [datainicio, setDatainicio] = useState(item.datainicio)
+    const [descricao,setDescricao] = useState(item.descricao)
+    const [datafim, setDataFim] = useState(item.datafim)
+    const [tipoEvento, setTipoEvento] = useState(tiposEventos[tiposEventos.indexOf(item.tipoevento)])
 
 
 
@@ -126,7 +126,10 @@ function TelaAttEvento({ route, navigation }) {
 
             <TouchableOpacity
                 style={styles.textButtonCadastrar}
-                onPress={() => {updateEvent(item.id_evento);navigation.navigate("Listagem",{mat})}}
+                onPress={() => {
+                    updateEvent(item.id_evento);
+                    navigation.navigate("Listagem",{mat})}
+                }
             >
                 <Text>Atualizar</Text>
             </TouchableOpacity>
