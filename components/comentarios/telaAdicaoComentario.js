@@ -16,6 +16,8 @@ function TelaAdicaoComentario({route,navigation}){
     const [data,setData] = useState("")
     const [comentarios,setComentarios] = useState("")
 
+    const dataTeste = new Date().toISOString();
+
     const createComment = () => {
 
         axios
@@ -29,7 +31,7 @@ function TelaAdicaoComentario({route,navigation}){
 
             } */
             {
-                "data": data,
+                "data": dataTeste,
                 "texto": textoComentario,
                 "mat_criador": mat,
                 "id_evento": item.id_evento,
@@ -51,15 +53,6 @@ function TelaAdicaoComentario({route,navigation}){
     
       return(
           <View style = {styles.containerPai}>
-            <Text style = {styles.h1}>Data de criação do comentário</Text>
-              <TextInput 
-                style = {styles.comentario2}
-                maxLength = {20}
-                value = {data}
-                onChangeText={setData}
-                placeholder="Digite a data de criação do comentário"
-              />
-              
               <Text style = {styles.h1}>Comentário sobre o evento</Text>
 
               <TextInput 

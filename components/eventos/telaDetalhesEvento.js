@@ -36,7 +36,10 @@ function TelaDetalhes({ route, navigation }) {
         var contador = 0;
 
         for (var i = 0 ; i < eventos.length ; i++) {
-           if ((eventos[i].id_evento == id) && (eventos[i].mat_criador == mat)){setEventos(deleteEvent(id));Alert.alert('Evento deletado com sucesso!'); navigation.navigate("Listagem",{mat});break;}
+           if ((eventos[i].id_evento == id) && (eventos[i].mat_criador == mat)){
+            setEventos(deleteEvent(id));
+            Alert.alert('Evento deletado com sucesso!'); 
+            navigation.navigate("Listagem",{mat});break;}
            else {contador++;}
         }
         if (contador === eventos.length) {Alert.alert('Somente o criador do evento pode deletá-lo!');navigation.navigate("Listagem",{mat});}
@@ -87,7 +90,7 @@ function TelaDetalhes({ route, navigation }) {
 
             <TouchableOpacity
                 style={styles.textButtonCadastrar}
-                onPress={() => navigation.navigate("AtualizaEvento", {evento:{evento},matricula:mat})}
+                onPress={() => {evento.mat_criador==mat? navigation.navigate("AtualizaEvento", {evento:{evento},matricula:mat}):Alert.alert('Somente o criador pode atualizar o evento')}}
 
             >
                 <Text>Atualizar Evento</Text>
