@@ -19,3 +19,9 @@ Repositório criado para o projeto na disciplina de Banco de Dados T01 do perío
 - banco de dados PostegreSQL, hospedado no Heroku;
 - API Rest com as funções de CRUD feita em Node.js + Express, hospedada no Heroku;
 - Aplicativo feito com React Native + Axios (envia as requisções à API).
+
+## Sobre a API:
+Para executá-la:
+- clone o repositório;
+- acesse a pasta da API e instale as dependências, executando o comando ```npm i```;
+- execute o comando ```node index.js```
